@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Chat replies stream from the `/api/chat` server route as newline-delimited JSON (`delta`/`done`/`error`) via the Lovable AI Gateway SDK; keep model calls server-side only.
+- Chat UI is built from AI Elements in `src/components/ai-elements/`; restyle those primitives rather than hand-building chat bubbles or composers.
