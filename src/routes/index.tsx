@@ -1,7 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
 import type { ChatStatus } from "ai";
-import { CopyIcon, FileTextIcon, LightbulbIcon, MailIcon, PenLineIcon, SquarePenIcon } from "lucide-react";
+import {
+  CopyIcon,
+  FileTextIcon,
+  LightbulbIcon,
+  MailIcon,
+  PenLineIcon,
+  SquarePenIcon,
+} from "lucide-react";
 
 import {
   Conversation,
@@ -30,9 +37,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Nimbus — Your calm AI assistant" },
-      { name: "description", content: "Chat with Nimbus, a professional AI assistant for writing, planning and clear answers." },
+      {
+        name: "description",
+        content:
+          "Chat with Nimbus, a professional AI assistant for writing, planning and clear answers.",
+      },
       { property: "og:title", content: "Nimbus — Your calm AI assistant" },
-      { property: "og:description", content: "Chat with Nimbus, a professional AI assistant for writing, planning and clear answers." },
+      {
+        property: "og:description",
+        content:
+          "Chat with Nimbus, a professional AI assistant for writing, planning and clear answers.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -43,10 +58,26 @@ export const Route = createFileRoute("/")({
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string; error?: boolean };
 
 const SUGGESTIONS = [
-  { icon: MailIcon, title: "Draft an email", prompt: "Help me write a polite follow-up email to a client who hasn't replied in a week." },
-  { icon: FileTextIcon, title: "Summarize text", prompt: "Explain how to write a strong executive summary, with a short example." },
-  { icon: LightbulbIcon, title: "Brainstorm ideas", prompt: "Give me 5 creative ideas for a team-building activity for a remote team." },
-  { icon: PenLineIcon, title: "Plan my week", prompt: "Help me plan a productive work week with focus time and breaks." },
+  {
+    icon: MailIcon,
+    title: "Draft an email",
+    prompt: "Help me write a polite follow-up email to a client who hasn't replied in a week.",
+  },
+  {
+    icon: FileTextIcon,
+    title: "Summarize text",
+    prompt: "Explain how to write a strong executive summary, with a short example.",
+  },
+  {
+    icon: LightbulbIcon,
+    title: "Brainstorm ideas",
+    prompt: "Give me 5 creative ideas for a team-building activity for a remote team.",
+  },
+  {
+    icon: PenLineIcon,
+    title: "Plan my week",
+    prompt: "Help me plan a productive work week with focus time and breaks.",
+  },
 ];
 
 const uid = () => Math.random().toString(36).slice(2, 10);
@@ -75,7 +106,9 @@ function ChatPage() {
       const update = (fn: (m: ChatMessage) => ChatMessage) =>
         setMessages((prev) => {
           const exists = prev.some((m) => m.id === assistantId);
-          const base = exists ? prev : [...prev, { id: assistantId, role: "assistant" as const, content: "" }];
+          const base = exists
+            ? prev
+            : [...prev, { id: assistantId, role: "assistant" as const, content: "" }];
           return base.map((m) => (m.id === assistantId ? fn(m) : m));
         });
 
@@ -83,7 +116,9 @@ function ChatPage() {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ messages: history.map(({ role, content }) => ({ role, content })) }),
+          body: JSON.stringify({
+            messages: history.map(({ role, content }) => ({ role, content })),
+          }),
           signal: controller.signal,
         });
         if (!res.ok || !res.body) throw new Error("Request failed");
@@ -104,7 +139,11 @@ function ChatPage() {
               setStatus("streaming");
               update((m) => ({ ...m, content: m.content + evt.d }));
             } else if (evt.t === "error") {
-              update((m) => ({ ...m, content: m.content || evt.m || "Something went wrong.", error: !m.content }));
+              update((m) => ({
+                ...m,
+                content: m.content || evt.m || "Something went wrong.",
+                error: !m.content,
+              }));
             }
           }
         }
@@ -113,7 +152,11 @@ function ChatPage() {
         if ((err as Error).name === "AbortError") {
           setStatus("ready");
         } else {
-          update((m) => ({ ...m, content: "I couldn't reach the server. Please try again.", error: true }));
+          update((m) => ({
+            ...m,
+            content: "I couldn't reach the server. Please try again.",
+            error: true,
+          }));
           setStatus("error");
         }
       } finally {
@@ -171,7 +214,9 @@ function ChatPage() {
               <div className="mb-6 flex size-20 items-center justify-center rounded-3xl bg-card shadow-soft ring-1 ring-border">
                 <img src={logo} alt="" width={56} height={56} className="size-14" />
               </div>
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground">How can I help today?</h2>
+              <h2 className="text-3xl font-semibold tracking-tight text-foreground">
+                How can I help today?
+              </h2>
               <p className="mt-2 max-w-md text-[0.95rem] text-muted-foreground">
                 Ask a question, draft a message, or work through an idea together.
               </p>
@@ -188,7 +233,9 @@ function ChatPage() {
                     </span>
                     <span>
                       <span className="block text-sm font-semibold text-foreground">{title}</span>
-                      <span className="mt-0.5 line-clamp-2 block text-xs text-muted-foreground">{prompt}</span>
+                      <span className="mt-0.5 line-clamp-2 block text-xs text-muted-foreground">
+                        {prompt}
+                      </span>
                     </span>
                   </button>
                 ))}
@@ -199,7 +246,13 @@ function ChatPage() {
               <Message key={m.id} from={m.role} className="animate-fade-up">
                 {m.role === "assistant" ? (
                   <div className="flex gap-3">
-                    <img src={logo} alt="" width={28} height={28} className="mt-0.5 size-7 shrink-0" />
+                    <img
+                      src={logo}
+                      alt=""
+                      width={28}
+                      height={28}
+                      className="mt-0.5 size-7 shrink-0"
+                    />
                     <div className="min-w-0 flex-1">
                       <MessageContent className={m.error ? "text-destructive" : undefined}>
                         <MessageResponse>{m.content}</MessageResponse>
@@ -248,7 +301,9 @@ function ChatPage() {
               className="min-h-14 px-4 pt-4 text-[0.95rem]"
             />
             <PromptInputFooter className="justify-between px-3 pb-3">
-              <span className="pl-1 text-xs text-muted-foreground">Enter to send · Shift + Enter for a new line</span>
+              <span className="pl-1 text-xs text-muted-foreground">
+                Enter to send · Shift + Enter for a new line
+              </span>
               <PromptInputSubmit
                 status={status}
                 onStop={stop}

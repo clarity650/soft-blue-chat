@@ -122,7 +122,8 @@
     var(--background);
   --gradient-primary: linear-gradient(135deg, var(--primary-glow), var(--primary));
   --shadow-soft: 0 1px 2px oklch(0.4 0.08 250 / 0.06), 0 8px 24px -8px oklch(0.45 0.1 250 / 0.14);
-  --shadow-composer: 0 2px 4px oklch(0.4 0.08 250 / 0.05), 0 18px 40px -16px oklch(0.45 0.12 250 / 0.28);
+  --shadow-composer:
+    0 2px 4px oklch(0.4 0.08 250 / 0.05), 0 18px 40px -16px oklch(0.45 0.12 250 / 0.28);
 }
 
 .dark {
@@ -203,8 +204,13 @@
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 @utility animate-pulse-dot {
