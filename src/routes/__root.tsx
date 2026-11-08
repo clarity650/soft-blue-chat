@@ -82,9 +82,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Nimbus — AI Assistant" },
-      { name: "description", content: "Nimbus is a calm, professional AI assistant for clear answers." },
+      {
+        name: "description",
+        content: "Nimbus is a calm, professional AI assistant for clear answers.",
+      },
       { property: "og:title", content: "Nimbus — AI Assistant" },
-      { property: "og:description", content: "Nimbus is a calm, professional AI assistant for clear answers." },
+      {
+        property: "og:description",
+        content: "Nimbus is a calm, professional AI assistant for clear answers.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

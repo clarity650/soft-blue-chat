@@ -23,8 +23,10 @@ function parseMessages(body: unknown): ChatTurn[] | null {
 
 function friendlyError(error: unknown): string {
   if (error instanceof GatewayError) {
-    if (error.name === "RateLimitError") return "Nimbus is a little busy right now. Please try again in a moment.";
-    if (error.name === "PaymentRequiredError") return "The AI credits for this app have run out. Please top up to keep chatting.";
+    if (error.name === "RateLimitError")
+      return "Nimbus is a little busy right now. Please try again in a moment.";
+    if (error.name === "PaymentRequiredError")
+      return "The AI credits for this app have run out. Please top up to keep chatting.";
   }
   return "Something went wrong while generating a reply. Please try again.";
 }
